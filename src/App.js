@@ -1,31 +1,28 @@
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import './App.css';
 
+const App = (props) => {
+  const contador = useState(0);
+  const [valueContador, updateContador] = contador; // Destructuring
 
+  const handleClick = () => {
+    updateContador(valueContador + 1);
+  };
 
-const message = 'Hello World';
-
-const But = () => {
-  return (
-    <button className='But'>
-      {message}
-    </button>
-  );
-}
-
-const Barra = () => {
-  return (
-    <p>
-      {message}
-    </p>
-  );
-}
-
-function App() {
+  const handleClickReset = () => {
+    updateContador(0);
+  };
   return (
     <div className="App">
-      <Barra />
-      <But />
+      <p>Prueba de React</p>
+      <h1>{contador}</h1>
+      <button onClick={handleClick}>
+        Incrementar
+      </button>
+      <button onClick={handleClickReset}>
+        Reset
+      </button>
+      <p>Magia de React</p>
     </div>
   );
 }
