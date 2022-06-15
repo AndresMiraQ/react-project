@@ -1,40 +1,47 @@
 import { useState } from 'react';
 import './App.css';
 import { Note } from './components/Note';
-
-const notes = [
-  {
-    id: 1,
-    content: 'HTML is easy',
-    date: '2020-01-01',
-    important: true,
-  },
-  {
-    id: 2,
-    content: 'Browser can execute only Javascript',
-    date: '2020-01-02',
-    important: false,
-  },
-  {
-    id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2020-01-03',
-    important: true,
-  }
-];
    
-//const listContens = notes.map(note => <li key={note.id}>{note.content}</li>);
+const App = (props) => {
+  const [notes, setNotes] = useState(props.notes);
+  const [newNote, setNewNote] = useState(''); 
+  const [showAll, setShowAll] = useState(true);
+  
+  const handleChange = (event) => {
+    setNewNote(event.target.value);
+  };
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Crear nota');
+    setNotes([...notes, {
+      id: notes.length + 1,
+      content: newNote,
+      date: new Date().toDateString(),
+      important: Math.random() > 0.5
+    }]);
+    setNewNote("");
+  }
+  
+  const handleShowAll = () => {
+    setShowAll(() => !showAll);
+  }
 
-const App = () => {
   return (
     <div className="App">
       <h1>Notes</h1>
+      <button onClick={handleShowAll}>{ showAll ? 'Show only important' : 'Show all'}</button>
       <ol>
-        {notes.map(note => <Note key={note.id} {...note} />)}
+        {notes
+        .filter(note => showAll || note.important)
+        .map(note => <Note key={note.id} {...note} />)}
       </ol>
+      <form onSubmit={handleSubmit}>
+        <input type="text" onChange={handleChange} value={newNote} />
+        <button>Add</button>
+      </form>
     </div>
   );
 }
-
 export { App };
 
