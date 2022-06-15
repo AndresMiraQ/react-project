@@ -1,11 +1,9 @@
 export const Note = (props) => {
-    const { content, date } = props;
+    const { title, body } = props;
     return (
         <li>
-          <p>{content}</p>
-          <small>
-            <time>{date}</time>
-          </small>
+          <p>{title}</p>
+          <small>{body}</small>
         </li>
     );
   };
