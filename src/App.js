@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';  // npm install axios
 import './App.css';
 import { Note } from './components/Note';
    
@@ -8,13 +9,13 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(json => {
-        setNotes(json)
-        setLoading(true)});
-    }, 2000);
+
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+      .then(response => {
+        const { data } = response;
+        setNotes(data);
+        setLoading(false);
+      });     
   }, []); // empty array means run once on page load
   
   const handleChange = (event) => {
