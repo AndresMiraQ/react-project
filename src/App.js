@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';  // npm install axios
-import { getAllNotes } from './services/notes/getAllNotes';
-import { createNote } from './services/notes/createNote';
+import { getAll, create, update } from './services/notes';
 import './App.css';
 import { Note } from './components/Note';
    
 const App = () => {
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState(''); 
+  const [newNote, setNewNote] = useState('');
+
 
   useEffect(() => {
-    getAllNotes()
+    getAll()
       .then(notes => {
         setNotes(notes);
       });     
@@ -36,11 +36,14 @@ const App = () => {
     }]);
 
     setNewNote('');
-    createNote(newNoteObject)
+    create(newNoteObject)
       .then(response => {
         setNotes([...notes, response]);
       });
+
   };
+
+
 
   return (
     <div className="App">
